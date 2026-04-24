@@ -262,7 +262,7 @@ export default function TravelPlanner() {
             )}
 
             {itinerary && (
-              <div className={styles.itineraryText} dangerouslySetInnerHTML={{ __html: itinerary.replace(/^### (.*$)/gim, '<h3>$1</h3>').replace(/^## (.*$)/gim, '<h2>$1</h2>').replace(/^# (.*$)/gim, '<h1>$1</h1>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/^- (.*$)/gim, '<li>$1</li>').replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>') }} />
+              <div className={styles.itineraryText} dangerouslySetInnerHTML={{ __html: itinerary.replace(/^### (.*$)/gim, '<h3>$1</h3>').replace(/^## (.*$)/gim, '<h2>$1</h2>').replace(/^# (.*$)/gim, '<h1>$1</h1>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/^- (.*$)/gim, '<li>$1</li>') }} />
             )}
           </section>
         )}
