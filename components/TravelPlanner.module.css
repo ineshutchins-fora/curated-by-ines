@@ -348,3 +348,39 @@
   .fieldRow3 { grid-template-columns: 1fr; }
   .header { padding: 2rem 1rem 1.5rem; }
 }
+.logo {
+  height: 80px;
+  width: auto;
+  margin-bottom: 0.5rem;
+}
+.fieldGroup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.photoWrap {
+  position: relative;
+  margin-bottom: 2.5rem;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.editorialPhoto {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+.photoCredit {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  font-size: 9px;
+  color: rgba(255,255,255,0.75);
+  font-family: var(--sans);
+  letter-spacing: 0.05em;
+}
+

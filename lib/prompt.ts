@@ -58,10 +58,8 @@ Use confident, decisive language:
 Avoid passive or hesitant phrasing.
 
 TRIP OVERVIEW STRATEGY:
-Explain briefly:
-• Why these locations were chosen
-• How the flow of the trip works
-• What makes this itinerary special
+Explain briefly why these locations were chosen, how the flow of the trip works, and what makes this itinerary special. Do NOT include a "at a glance" summary box or bullet point overview.
+
 
 DAY-BY-DAY ITINERARY:
 For each day:

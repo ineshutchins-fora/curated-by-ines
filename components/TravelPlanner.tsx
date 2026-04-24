@@ -35,7 +35,10 @@ export default function TravelPlanner() {
 
   const [loading, setLoading] = useState(false);
   const [itinerary, setItinerary] = useState('');
-  const [error, setError] = useState('');
+const [error, setError] = useState('');
+const [departureAirport, setDepartureAirport] = useState('');
+const [arrivalTime, setArrivalTime] = useState('');
+const [photo, setPhoto] = useState<{url: string, author: string} | null>(null);
 
   const outputRef = useRef<HTMLDivElement>(null);
 
@@ -52,15 +55,29 @@ export default function TravelPlanner() {
     }
 
     setError('');
-    setItinerary('');
-    setLoading(true);
+   setItinerary('');
+setPhoto(null);
+setLoading(true);
 
     setTimeout(() => {
       outputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
 
-    try {
-      const res = await fetch('/api/generate', {
+   try {
+  const photoRes = await fetch(`https://api.unsplash.com/search/photos?query=${encodeURIComponent(destination)}&orientation=landscape&per_page=1&client_id=5lZe075dK-T0K30uza8U7l4A4zET86UbyTejwH7J3yg`);
+  const photoData = await photoRes.json();
+  if (photoData.results?.[0]) {
+    setPhoto({
+      url: photoData.results[0].urls.regular,
+      author: photoData.results[0].user.name
+    });
+  }
+} catch {
+  // Photo is optional, silently fail
+}
+
+try {
+    const res = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -71,6 +88,8 @@ export default function TravelPlanner() {
           styles: selectedStyles,
           pace,
           who,
+          departureAirport,
+          arrivalTime,
         }),
       });
 
@@ -109,8 +128,7 @@ export default function TravelPlanner() {
       {/* Header */}
       <header className={styles.header}>
         <div className={styles.headerInner}>
-          <p className={styles.eyebrow}>Travel Planning by</p>
-          <h1 className={styles.brandTitle}>Curated by Ines</h1>
+          <img src="/logo.png" alt="Curated by Ines" className={styles.logo} />
           <p className={styles.brandSub}>Your personalized journey, thoughtfully designed</p>
         </div>
       </header>
@@ -223,7 +241,29 @@ export default function TravelPlanner() {
               ))}
             </div>
           </div>
+<div className={styles.divider} />
 
+          <div className={styles.fieldGroup}>
+            <div>
+              <label className={styles.fieldLabel}>Departure airport (optional)</label>              <input
+                className={styles.input}
+                type="text"
+                placeholder="e.g. BNA, JFK, ORD"
+                value={departureAirport}
+                onChange={e => setDepartureAirport(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className={styles.fieldLabel}>Estimated arrival time (optional)</label>
+              <input
+                className={styles.input}
+                type="text"
+                placeholder="e.g. 2:00 PM local time"
+                value={arrivalTime}
+                onChange={e => setArrivalTime(e.target.value)}
+              />
+            </div>
+          </div>
           {error && <p className={styles.errorMsg}>{error}</p>}
 
           <button
@@ -241,6 +281,14 @@ export default function TravelPlanner() {
         {(loading || itinerary) && (
           <section className={styles.outputCard} ref={outputRef}>
             <div className={styles.ornament}>— ✦ —</div>
+
+            {photo && (
+              <div className={styles.photoWrap}>
+                <img src={photo.url} alt={destination} className={styles.editorialPhoto} />
+                <span className={styles.photoCredit}>Photo by {photo.author} · Unsplash</span>
+              </div>
+            )}
+
             <div className={styles.outputHeader}>
               <h2 className={styles.outputTitle}>
                 {destination ? `Your ${destination} Itinerary` : 'Your Itinerary'}
