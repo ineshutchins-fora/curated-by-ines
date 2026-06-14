@@ -38,6 +38,7 @@ export default function TravelPlanner() {
 const [error, setError] = useState('');
 const [departureAirport, setDepartureAirport] = useState('');
 const [arrivalTime, setArrivalTime] = useState('');
+const [email, setEmail] = useState('');
 const [photo, setPhoto] = useState<{url: string, author: string} | null>(null);
 
   const outputRef = useRef<HTMLDivElement>(null);
@@ -49,8 +50,13 @@ const [photo, setPhoto] = useState<{url: string, author: string} | null>(null);
   };
 
   const handleSubmit = async () => {
-    if (!destination.trim() || !duration.trim()) {
+if (!destination.trim() || !duration.trim()) {
       setError('Please fill in at least the destination and trip length.');
+      return;
+    }
+
+    if (!email.trim() || !email.includes('@')) {
+      setError('Please enter a valid email address.');
       return;
     }
 
@@ -62,7 +68,25 @@ setLoading(true);
     setTimeout(() => {
       outputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
-
+// Save lead to Google Sheets
+    try {
+      await fetch('https://script.google.com/macros/s/AKfycbyVgPhJ0d6ZDeUaPrmUlRwo7Z8GIzyHbxlMKEVyOBAAtffQ-dORjWt7R0KTzi6yh8LMlA/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          destination,
+          duration,
+          month,
+          budget,
+          styles: selectedStyles.join(', '),
+          who,
+        }),
+      });
+    } catch {
+      // Silently fail — don't block itinerary generation
+    }
    try {
   const photoRes = await fetch(`https://api.unsplash.com/search/photos?query=${encodeURIComponent(destination)}&orientation=landscape&per_page=1&client_id=5lZe075dK-T0K30uza8U7l4A4zET86UbyTejwH7J3yg`);
   const photoData = await photoRes.json();
@@ -263,6 +287,20 @@ try {
                 onChange={e => setArrivalTime(e.target.value)}
               />
             </div>
+          </div>
+<div className={styles.divider} />
+          <div className={styles.fieldFull}>
+            <label className={styles.fieldLabel}>Your email address *</label>
+            <input
+              className={styles.input}
+              type="email"
+              placeholder="email@example.com"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+            <p style={{ fontSize: '10px', color: '#9A9088', marginTop: '5px', fontWeight: 300 }}>
+              We'll send you travel inspiration and can follow up to help book your trip.
+            </p>
           </div>
           {error && <p className={styles.errorMsg}>{error}</p>}
 
