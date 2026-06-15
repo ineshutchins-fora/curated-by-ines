@@ -384,3 +384,37 @@
   letter-spacing: 0.05em;
 }
 
+.ctaBox {
+  margin-top: 2.5rem;
+  padding: 2rem;
+  background: var(--gold-pale);
+  border: 1px solid var(--sand-dark);
+  border-radius: 2px;
+  text-align: center;
+}
+
+.ctaText {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--ink);
+  margin-bottom: 1.2rem;
+}
+
+.ctaBtn {
+  display: inline-block;
+  padding: 14px 32px;
+  background: var(--ink);
+  color: var(--cream);
+  text-decoration: none;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: background 0.2s;
+  font-weight: 400;
+}
+
+.ctaBtn:hover { background: var(--gold); }

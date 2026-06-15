@@ -350,6 +350,20 @@ try {
             {itinerary && (
               <div className={styles.itineraryText} dangerouslySetInnerHTML={{ __html: itinerary.replace(/^### (.*$)/gim, '<h3>$1</h3>').replace(/^## (.*$)/gim, '<h2>$1</h2>').replace(/^# (.*$)/gim, '<h1>$1</h1>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/^- (.*$)/gim, '<li>$1</li>') }} />
             )}
+
+            {itinerary && (
+              <div className={styles.ctaBox}>
+               <p className={styles.ctaText}>
+                  Love this itinerary? I can make it real — and get you perks you can't book alone.
+                </p>
+                 <a  
+                  href="mailto:ines@curatedbyines.com?subject=Travel Inquiry from Curated by Ines"
+                  className={styles.ctaBtn}
+                >
+                  Book This Trip With Ines ✦
+                </a>
+              </div>
+            )}
           </section>
         )}
       </main>
